@@ -1,0 +1,8 @@
+# 服务名称
+spring:
+  application:
+    name: service-order
+
+ # 服务端口
+server:
+  port: 9000

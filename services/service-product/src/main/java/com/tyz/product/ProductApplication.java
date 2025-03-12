@@ -15,7 +15,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 // Springboot 启动类的注解
 @SpringBootApplication
 public class ProductApplication {
+
     public static void main(String[] args) {
+        System.setProperty("nacos.logging.default.config.enabled", "false");
         SpringApplication.run(ProductApplication.class, args);
     }
 }

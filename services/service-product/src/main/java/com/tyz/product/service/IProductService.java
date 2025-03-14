@@ -1,6 +1,6 @@
 package com.tyz.product.service;
 
-import com.tyz.product.bean.ProductVO;
+import com.tyz.procuct.bean.ProductVO;
 
 /**
  * @author tyz

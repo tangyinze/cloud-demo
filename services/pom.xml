@@ -35,6 +35,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <!--spring-cloud 负载均衡-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
         <!--log4j2版本和springboot 版本保持一致 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,6 +52,13 @@
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>${disruptor.version}</version>
+        </dependency>
+
+        <!--内部服务之间共享模型层 -->
+        <dependency>
+            <groupId>com.tyz</groupId>
+            <artifactId>model</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

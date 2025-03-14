@@ -16,6 +16,7 @@
     <description>cloud-demo</description>
     <modules>
         <module>services</module>
+        <module>model</module>
     </modules>
     <!-- 父亲pom 打包方式为pom-->
     <packaging>pom</packaging>

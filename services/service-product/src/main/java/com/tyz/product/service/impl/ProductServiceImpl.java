@@ -1,6 +1,6 @@
 package com.tyz.product.service.impl;
 
-import com.tyz.product.bean.ProductVO;
+import com.tyz.procuct.bean.ProductVO;
 import com.tyz.product.service.IProductService;
 import org.springframework.stereotype.Service;
 

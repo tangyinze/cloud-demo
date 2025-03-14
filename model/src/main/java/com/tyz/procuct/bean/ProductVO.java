@@ -1,4 +1,4 @@
-package com.tyz.product.bean;
+package com.tyz.procuct.bean;
 
 import java.math.BigDecimal;
 

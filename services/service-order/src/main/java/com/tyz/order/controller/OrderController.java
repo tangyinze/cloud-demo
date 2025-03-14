@@ -27,8 +27,12 @@ public class OrderController {
 
     @Value("${order.timeout:0s}")
     String timeOut;
+
     @Value("${order.auto-confirm:0d}")
     String autoConfirm;
+
+    @Value("${nacos-mark-env:nullEnv}")
+    private String nacosMarkEnv;
 
     private OrderProperties orderProperties;
     IOrderService orderService;
@@ -60,7 +64,9 @@ public class OrderController {
      */
     @GetMapping("/order/nacos/cfg")
     public Map<String, String> loadOrderCfg() {
-        Map<String, String> nacosOrderCfg = Map.of("timeOut", timeOut, "autoConfirm", autoConfirm);
+        Map<String, String> nacosOrderCfg = Map.of("timeOut", timeOut,
+                "autoConfirm", autoConfirm,
+                "nacosMarkEnv", nacosMarkEnv);
         LOGGER.info("nacosOrderCfg:{}", nacosOrderCfg);
         return nacosOrderCfg;
     }

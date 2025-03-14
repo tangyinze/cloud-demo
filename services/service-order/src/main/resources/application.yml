@@ -1,20 +1,7 @@
-# 服务名称
+# 配置
 spring:
+  # 多环境配置参数激活
+  profiles:
+    active: dev
   application:
     name: service-order
-  # nacos 服务注册中心
-  cloud:
-    nacos:
-      server-addr: http://172.16.248.130:8848
-  # 配置中心导入配置
-  config:
-    # nacos dataId 外部优先本地配置 先申明优先
-    import: nacos:service-order.properties
-
-# 服务端口
-server:
-  port: 9000
-
-logging:
-  config: classpath:log4j2.xml
-

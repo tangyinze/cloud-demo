@@ -34,4 +34,65 @@
         <!--spring boot project web 依赖 end  -->
     </dependencies>
 
+    <build>
+        <resources>
+            <!-- 将所有application开头的yaml文件排除，可以排除多个 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>application*.yaml</exclude>
+                </excludes>
+            </resource>
+
+            <!-- 根据激活条件引入打包所需的配置文件，可以引入多个 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>application.yaml</include>
+                    <include>application-${environment}.yaml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- 环境配置 -->
+    <profiles>
+        <profile>
+            <!-- 环境id -->
+            <id>dev</id>
+            <activation>
+                <!-- 是否默认启用 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- 环境标签变量，在yaml中会被用到 -->
+                <environment>dev</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>sit</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <environment>sit</environment>
+            </properties>
+        </profile>
+        <profile>
+            <id>pro</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <environment>pro</environment>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>

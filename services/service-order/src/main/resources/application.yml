@@ -6,6 +6,10 @@ spring:
   cloud:
     nacos:
       server-addr: http://172.16.248.130:8848
+  # 配置中心导入配置
+  config:
+    # nacos dataId 外部优先本地配置 先申明优先
+    import: nacos:service-order.properties
 
 # 服务端口
 server:

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * @program: cloud-demo
@@ -46,6 +48,15 @@ public class ProductController {
     public ProductVO getProduct(@PathVariable("id") Long productId) {
         ProductVO proVo = productService.getProductById(productId);
         LOGGER.info("product info:{}", proVo);
+        try {
+            // TODO 模拟借口超时，feign配置了重试就会触发重试
+            // TimeUnit.SECONDS.sleep(6);
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e0) {
+            // 重新设置中断状态
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e0);
+        }
         return proVo;
     }
 }

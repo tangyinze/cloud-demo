@@ -1,6 +1,7 @@
 package com.tyz.order.service.impl;
 
 import com.tyz.order.bean.OrderVO;
+import com.tyz.order.feign.ProductFeignClient;
 import com.tyz.order.service.IOrderService;
 import com.tyz.procuct.bean.ProductVO;
 import org.slf4j.Logger;
@@ -33,12 +34,16 @@ public class OrderServiceImpl implements IOrderService {
     // spring-cloud 自带的负载均衡 默认是轮询
     LoadBalancerClient loadBalancerClient;
 
+    ProductFeignClient productFeignClient;
+
     // 远成服务调用
     RestTemplate restTemplate;
 
-    public OrderServiceImpl(DiscoveryClient discoveryClient, LoadBalancerClient loadBalancerClient, RestTemplate restTemplate) {
+    @Autowired
+    public OrderServiceImpl(DiscoveryClient discoveryClient, LoadBalancerClient loadBalancerClient, ProductFeignClient productFeignClient, RestTemplate restTemplate) {
         this.discoveryClient = discoveryClient;
         this.loadBalancerClient = loadBalancerClient;
+        this.productFeignClient = productFeignClient;
         this.restTemplate = restTemplate;
     }
 
@@ -52,7 +57,9 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public OrderVO crateOrder(Long productId, Long userId) {
         // 获取商品信息
-        ProductVO remoteProduct = getLoadBalancedAnnotationProduct(productId);
+        // ProductVO remoteProduct = getLoadBalancedAnnotationProduct(productId);
+        // 切换成FeignClient的调用（自带负载均衡）
+        ProductVO remoteProduct = productFeignClient.getProductById(productId);
         OrderVO vo = new OrderVO();
         vo.setAddress("tyz home");
         vo.setUserId(userId);

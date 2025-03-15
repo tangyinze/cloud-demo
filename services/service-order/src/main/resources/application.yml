@@ -3,5 +3,7 @@ spring:
   # 多环境配置参数激活
   profiles:
     active: dev
+    # 导入 application-feign.yml的文件
+    include: feign
   application:
     name: service-order

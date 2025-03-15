@@ -9,6 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 import java.util.concurrent.Executor;
@@ -21,6 +22,8 @@ import java.util.concurrent.Executors;
  * @create: 2025-03-07
  */
 @EnableDiscoveryClient
+// 开启feign注解功能
+@EnableFeignClients(basePackages = "com.tyz.order.feign")
 @SpringBootApplication
 public class OrderMainApplication {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderMainApplication.class);

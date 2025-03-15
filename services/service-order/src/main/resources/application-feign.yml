@@ -1,0 +1,23 @@
+# 配置
+# 开启feign日志
+logging:
+  level:
+    com.tyz.order.feign: info
+
+# feign 超时控制
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          # 默认配置
+          default:
+            logger-level: full
+            # 连接超时 单位耗秒
+            connect-timeout: 3000
+            # 读出超时 单位耗秒
+            read-timeout: 6000
+          service-product:
+            logger-level: full
+            connect-timeout: 3000
+            read-timeout: 5000

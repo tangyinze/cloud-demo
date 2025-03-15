@@ -4,6 +4,9 @@ spring:
   cloud:
     nacos:
       server-addr: http://172.16.248.130:8848
+      # 可以指定命名空间
+      discovery:
+        namespace: ${spring.profiles.active:public}
       # nacos 动态指定空间配置
       config:
         namespace: ${spring.profiles.active:public}

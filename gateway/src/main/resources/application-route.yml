@@ -1,0 +1,27 @@
+# 配置网关
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        # CORS - 跨域处理
+        cors-configurations:
+          '[/**]':
+            allowed-origin-patterns: '*'
+            allowed-methods: '*'
+            allowed-headers: '*'
+      routes:
+        - id: order-route
+          uri: lb://service-order
+          predicates:
+            - Path=/api/order/**
+          order: 1
+        - id: product-route
+          uri: lb://service-product
+          predicates:
+            - Path=/api/product/**
+          order: 2
+        - id: bing-route
+          uri: https://cn.bing.com/
+          predicates:
+            - Path=/**
+          order: 10

@@ -1,13 +1,15 @@
+# 配置
 spring:
   # 多环境配置参数激活
   profiles:
     active: dev
+    # 导入 application-route.yml的文件
+    include: route
   application:
-    name: service-product
-
+    name: service-gateway
 
 server:
-  port: 9001
+  port: 80
 
 logging:
   config: classpath:log4j2.xml

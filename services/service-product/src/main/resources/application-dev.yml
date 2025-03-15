@@ -1,0 +1,15 @@
+spring:
+  # nacos 服务注册中心
+  cloud:
+    nacos:
+      server-addr: http://172.16.248.130:8848
+      # 可以指定命名空间
+      discovery:
+        namespace: ${spring.profiles.active:public}
+      # 配置中心导入配置
+      config:
+        # nacos 商品配置不加入配置中心参数关闭检察吂动才不会报错
+        import-check:
+          enabled: false
+
+

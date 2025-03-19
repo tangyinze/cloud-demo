@@ -18,6 +18,8 @@
         <module>services</module>
         <module>model</module>
         <module>gateway</module>
+        <module>publisher-rabbitmq</module>
+        <module>consumer-rabbitmq</module>
     </modules>
     <!-- 父亲pom 打包方式为pom-->
     <packaging>pom</packaging>

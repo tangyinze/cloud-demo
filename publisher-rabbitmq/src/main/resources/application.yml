@@ -1,0 +1,10 @@
+# 配置
+spring:
+  # 多环境配置参数激活
+  profiles:
+    active: dev
+    # 导入 application-feign.yml的文件
+    include:
+       - rabbit
+  application:
+    name: publisher-rabbitmq

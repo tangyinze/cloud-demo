@@ -1,0 +1,13 @@
+# rabbit的配置信息
+spring:
+  rabbitmq:
+    # RabbitMQ的IP地址
+    host: 172.16.248.130
+    # RabbitMQ的通信端口
+    port: 5672
+    # RabbitMQ的用户名
+    username: rabbit
+    # RabbitMQ的密码
+    password: rabbit
+    # 虚拟主机
+    virtual-host: dev

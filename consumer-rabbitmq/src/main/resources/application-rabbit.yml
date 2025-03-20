@@ -17,7 +17,8 @@ spring:
         # 每次只能获取一条消息，处理完成才能获取下一个消息 这样消费预取限制（轮着分配完后在消费）
         prefetch: 1
         # 消息者确认机制 none，关闭ack；manual 手动ack；auto 自动ack
-        acknowledge-mode: manual
+        # 建议配置auto和重试与失败处理策略
+        acknowledge-mode: auto
         retry:
           enabled: true
           # 最大重试3次

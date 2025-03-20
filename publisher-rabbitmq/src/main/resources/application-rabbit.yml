@@ -23,6 +23,8 @@ spring:
         multiplier: 1
         # 最大重试次数
         max-attempts: 3
+      # 必须设置成true 消息路由失败通知监听者，而不是将消息丢弃
+      mandatory: true
     # 开启publisher confirm 机制 并设置confirm类型 确保消息到交换机 是异步回调方法
     publisher-confirm-type: correlated
     # 开启publisher return 机制 到队列

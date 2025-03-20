@@ -1,10 +1,8 @@
 package com.tyz.rabbitmq.listener;
 
-import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.Argument;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -13,7 +11,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -237,7 +234,16 @@ public class AmqpRabbitComListener {
             )
     )
     @RabbitHandler
-    public void listenerTopicSpQueueT(String msg, Channel channel, Message message) throws IOException {
+    public void listenerTopicSpQueueT(String msg) {
+        LOGGER.info(
+                "消费者main接收到交换机:{}的lazy队列{}的消息：{}",
+                TOPIC_EX_NAME,
+                TOPIC_QUE_THIRD,
+                msg);
+        LOGGER.info("开始消息确认auto重试机制加异常策略 不会无限重试");
+        int c = 1 / 0;
+    }
+    /*public void listenerTopicSpQueueT(String msg, Channel channel, Message message) throws IOException {
         LOGGER.info(
                 "消费者main接收到交换机:{}的lazy队列{}的消息：{}",
                 TOPIC_EX_NAME,
@@ -253,5 +259,5 @@ public class AmqpRabbitComListener {
             LOGGER.error("消息确认失败，即将再次返回队列中");
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), true, true);
         }
-    }
+    }*/
 }

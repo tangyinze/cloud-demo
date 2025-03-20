@@ -1,10 +1,15 @@
 package com.tyz.rabbitmq.message;
 
+
+import org.springframework.amqp.core.MessageDeliveryMode;
+import org.springframework.amqp.core.MessagePostProcessor;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 /**
  * @program: cloud-demo
@@ -26,20 +31,42 @@ public class ProductTopicMsg {
     public void sentTaskMsg(String msg) {
         rabbitTemplate.convertAndSend(TOPIC_EX_NAME,
                 "task",
-                msg.getBytes(StandardCharsets.UTF_8)
+                msg.getBytes(StandardCharsets.UTF_8),
+                getMessagePersistent()
         );
     }
 
     public void sentLogMsg(String msg) {
         rabbitTemplate.convertAndSend(TOPIC_EX_NAME,
                 "log",
-                msg.getBytes(StandardCharsets.UTF_8)
+                msg.getBytes(StandardCharsets.UTF_8),
+                getMessagePersistent()
         );
     }
     public void sentJobMsg(String msg) {
-        rabbitTemplate.convertAndSend(TOPIC_EX_NAME,
+        // 保证消息唯一性
+        CorrelationData cd = new CorrelationData(UUID.randomUUID().toString());
+        //
+
+        rabbitTemplate.convertAndSend(
+                TOPIC_EX_NAME,
                 "job.",
-                msg.getBytes(StandardCharsets.UTF_8)
+                msg.getBytes(StandardCharsets.UTF_8),
+                getMessagePersistent(),
+                cd
         );
+    }
+
+    /**
+     * <p>消息持久化</p>
+     *
+     * @return MessagePostProcessor
+     */
+    private static MessagePostProcessor getMessagePersistent() {
+        return message -> {
+            // 消息也持久化
+            message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+            return message;
+        };
     }
 }

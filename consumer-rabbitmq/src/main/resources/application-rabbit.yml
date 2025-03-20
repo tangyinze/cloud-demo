@@ -16,3 +16,15 @@ spring:
       simple:
         # 每次只能获取一条消息，处理完成才能获取下一个消息 这样消费预取限制（轮着分配完后在消费）
         prefetch: 1
+        # 消息者确认机制 none，关闭ack；manual 手动ack；auto 自动ack
+        acknowledge-mode: manual
+        retry:
+          enabled: true
+          # 最大重试3次
+          max-attempts: 3
+          # 下次失败等待时长倍数 下次等待时长 = multiplier*initial-interval
+          multiplier: 1
+          # 初始失败等待时间单位毫秒
+          initial-interval: 10000ms
+          # true 无装态 false 有状态 如果中包含事务这里就要改为false
+          stateless: true

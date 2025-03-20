@@ -11,3 +11,19 @@ spring:
     password: rabbit
     # 虚拟主机
     virtual-host: dev
+    # 网络波动，开启重连机制 MQ的连接超时间 springAmqp 提供的重试是阻塞时 业务上建议还是不要使用
+    connection-timeout: 1s
+    template:
+      # 开启超时重试机制
+      retry:
+        enabled: true
+        # 失败后等待时间
+        initial-interval:  1000ms
+        # 失效后下次的等待时长倍数，下次等待时长=initial-interval*multiplier
+        multiplier: 1
+        # 最大重试次数
+        max-attempts: 3
+    # 开启publisher confirm 机制 并设置confirm类型 确保消息到交换机 是异步回调方法
+    publisher-confirm-type: correlated
+    # 开启publisher return 机制 到队列
+    publisher-returns: true

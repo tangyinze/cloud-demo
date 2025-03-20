@@ -46,38 +46,48 @@ public class RabbitMqConfigs {
 
     /**
      * <p>
-     * 队列：TOPIC_QUE_MAIN
+     * 队列一：TOPIC_QUE_MAIN
+     * 开启lazy 模型同时也持久化了
      * </p>
      *
      * @return queue
      */
     @Bean("spTopicQueueMain")
     public Queue spTopicQueueMain() {
-        return QueueBuilder.durable(TOPIC_QUE_MAIN).build();
+        return QueueBuilder
+                .durable(TOPIC_QUE_MAIN)
+                .lazy()
+                .build();
     }
 
     /**
      * <p>
-     * 队列：TOPIC_QUE_SECOND
+     * 队列二：TOPIC_QUE_SECOND
      * </p>
      *
      * @return queue
      */
     @Bean("spTopicQueueSecond")
     public Queue spTopicQueueSecond() {
-        return QueueBuilder.durable(TOPIC_QUE_SECOND).build();
+        return QueueBuilder
+                .durable(TOPIC_QUE_SECOND)
+                .lazy()
+                .build();
     }
 
     /**
      * <p>
-     * 队列：TOPIC_QUE_THIRD
+     * 队列三：TOPIC_QUE_THIRD
      * </p>
      *
      * @return queue
      */
     @Bean("spTopicQueueThird")
     public Queue spTopicQueueThird() {
-        return QueueBuilder.durable(TOPIC_QUE_THIRD).build();
+        return QueueBuilder
+                .durable(TOPIC_QUE_THIRD)
+                .lazy()
+                .build();
     }
 
     /**

@@ -7,4 +7,4 @@ spring:
     include:
        - rabbit
   application:
-    name: publisher-rabbitmq
+    name: consumer-rabbitmq

@@ -2,10 +2,13 @@ package com.tyz.rabbitmq;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * SpringAMQP提供了三个功能：
@@ -86,6 +89,36 @@ public class SpringAMQPTest {
         String message2 = "tyz.topic 2 message！";
         rabbitTemplate.convertAndSend(exchangeName, "uas.news", message2);
         System.out.println("message send topic over....");
+    }
+
+    /**
+     * <p>
+     *     测试发送死信息消息
+     * </p>
+     */
+    @Test
+    public void testSendDlxExchange() {
+        // 交换机名称
+        String exchangeName = "tyz.work.direct.dlx";
+        // 消息
+        // 发送消息，参数分别是：交互机名称、RoutingKey、消息
+        for (int ii = 0; ii < 36; ii++) {
+            String message = "tyz dlx message[ " + ii + " ]！";
+            rabbitTemplate.convertAndSend(
+                    exchangeName,
+                    "s-dlx",
+                    message.getBytes(StandardCharsets.UTF_8),
+                    msg -> {
+                        msg.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+                        msg.getMessageProperties().setExpiration("1000");
+                        return msg;
+                    }
+            );
+
+        }
+        System.out.println("message send topic dlx msg over....");
+
+
     }
 
 }

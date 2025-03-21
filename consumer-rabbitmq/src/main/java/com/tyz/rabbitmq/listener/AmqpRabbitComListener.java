@@ -30,15 +30,15 @@ public class AmqpRabbitComListener {
 
     public static final String TOPIC_QUE_THIRD = "spring_boot_topic_queue_third";
 
-    @RabbitListener(
+    /*@RabbitListener(
             // 注意这样声明队列 如果不存的 启动会报错的，正确做法可以采用声明式bean配置注解 或者 基于注解声明队列和交换机
             queues = "tyz.Simple.queue0"
     )
     public void listenSimpleQueue0(String message) {
         LOGGER.info("消费者0接收到 tyz.Simple.queue0的消息：{}", message);
-    }
+    }*/
 
-    @RabbitListener(queues = "tyz.Simple.queue")
+    //@RabbitListener(queues = "tyz.Simple.queue")
     public void listenSimpleQueue(String message) {
         LOGGER.info("消费者1接收到 tyz.Simple.queue的消息：{}", message);
         try {
@@ -50,7 +50,7 @@ public class AmqpRabbitComListener {
         }
     }
 
-    @RabbitListener(queues = "tyz.Simple.queue")
+    //@RabbitListener(queues = "tyz.Simple.queue")
     public void listenSimpleQueue2(String message) {
         LOGGER.info("消费者2接收到 tyz.Simple.queue的消息：{}", message);
         try {
@@ -260,4 +260,29 @@ public class AmqpRabbitComListener {
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), true, true);
         }
     }*/
+
+    @RabbitListener(
+            bindings =
+                    @QueueBinding(
+                            value = @Queue(
+                                    name = "tyz.direct.queue.dlx",
+                                    durable = "true",
+                                    arguments = @Argument(
+                                            name = "x-queue-mode",
+                                            value = "lazy"
+                                    )
+                            ),
+                            exchange = @Exchange(
+                                    name = "tyz.direct.dlx",
+                                    durable = "true",
+                                    type = ExchangeTypes.DIRECT
+                            ),
+                            key = "dlx"
+                    )
+    )
+    public void dlxMsgHandler(String msg) {
+        LOGGER.info(
+                "消费者死信队列实现延时的消息消费：{}",
+                msg);
+    }
 }

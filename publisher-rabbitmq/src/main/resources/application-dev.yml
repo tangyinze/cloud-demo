@@ -3,3 +3,17 @@
 # 服务端口
 server:
   port: 9005
+  # 内嵌tomcat的一些默认参数spring-configuration-metadata.json
+  tomcat:
+    accept-count: 100
+    threads:
+      # 初始化线程数
+      min-spare: 10
+      # 最大线程数
+      max: 200
+    # 空闭时间
+    keep-alive-timeout: 3000ms
+    # 最大连接
+    max-connections: 8192
+    # 连接超时毫秒
+    connection-timeout: 12000ms

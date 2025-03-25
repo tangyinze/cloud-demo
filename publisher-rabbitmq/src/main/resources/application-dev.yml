@@ -5,7 +5,7 @@ server:
   port: 9005
   # 内嵌tomcat的一些默认参数spring-configuration-metadata.json
   tomcat:
-    accept-count: 100
+    accept-count: 150
     threads:
       # 初始化线程数
       min-spare: 50
@@ -18,3 +18,4 @@ server:
     # 连接超时毫秒
     connection-timeout: 12000ms
   # 正在开发中
+# fix config over.

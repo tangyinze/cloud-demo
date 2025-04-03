@@ -47,6 +47,28 @@
             <artifactId>spring-rabbit</artifactId>
         </dependency>-->
 
+        <!-- 集成redis依赖 begin -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- 连接池 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <!--不要带版本号,防止冲突 使用spring-boot-dependencies中的版本-->
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+           <!-- <version>2.13.2.2</version>-->
+        </dependency>
+        <!-- 集成redis依赖 end -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.amqp</groupId>
             <artifactId>spring-rabbit-test</artifactId>

@@ -6,5 +6,6 @@ spring:
     # 导入 application-feign.yml的文件
     include:
        - rabbit
+       - redis-single
   application:
     name: consumer-rabbitmq

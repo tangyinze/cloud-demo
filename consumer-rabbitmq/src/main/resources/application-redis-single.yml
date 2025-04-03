@@ -1,0 +1,31 @@
+# redis single的配置信息
+spring:
+  data:
+    redis:
+      # 连接超时时莫默认18000 ms
+      timeout: 18000
+      #
+      connect-timeout: 3s
+      # Redis 服务器地址
+      host: 172.16.248.130
+      # Redis 服务器连接端口
+      prot: 6379
+      # Redis 密码
+      password: root
+      # Redis 默认数据库 数据库编号（0~15）
+      database: 0
+      # lettuce url redis://[username:password@]host[:port][/database][?timeout=3s]
+      url: redis://:root@172.16.248.130:6379/0
+      lettuce:
+        pool:
+          #连接池中的最小空闲连接
+          min-idle: 3
+          #连接池中的最大空闲连接
+          max-idle: 5
+          # 连接池最大连接数（负值表示无限制）
+          max-active: 100
+          # 最大等待时间
+          max-wait: 3000ms
+
+
+

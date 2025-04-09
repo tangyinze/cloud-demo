@@ -64,6 +64,13 @@
            <!-- <version>2.13.2.2</version>-->
         </dependency>
         <!-- 集成redis依赖 end -->
+        <!-- Redisson官方Starter（必选） -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.25.2</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

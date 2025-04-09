@@ -27,5 +27,30 @@ spring:
           # 最大等待时间
           max-wait: 3000ms
 
+  # Redisson高级配置 spring.redis.redisson
+  redis:
+    redisson:
+      config: |  # 必须使用 | 保留换行格式
+        # 单机版
+        singleServerConfig:
+          # 最大连接数
+          connectionPoolSize: 64
+          # 空闲超时 ms
+          idleConnectionTimeout: 10000
+          # 连接建立超时 ms
+          connectTimeout: 1000
+          # 命令重试次数
+          retryAttempts: 3
+          # 重试间隔(ms)
+          retryInterval: 1500
+          timeout: 3000
+          password: root
+          address: redis://172.16.248.130:6379
+          connectionMinimumIdleSize: 24
+          connectionPoolSize: 64
+          database: 0
+          dnsMonitoringInterval: 5000
+
+
 
 

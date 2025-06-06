@@ -1,0 +1,12 @@
+# zk single的配置信息
+zookeeper:
+  connect-string: 172.16.248.130:2181,172.16.248.130:2182,172.16.248.130:2183
+  session-timeout: 30000
+  connection-timeout: 15000
+
+
+
+
+
+
+

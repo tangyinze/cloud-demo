@@ -1,0 +1,19 @@
+# jwt 的配置信息
+jwt:
+  # 开启标识
+  enabled: true
+  # 签名密钥
+  secret: tyz.com.cn
+  # 单位毫秒
+  expiration: 1800000
+  # 签发都
+  issuer: tyz
+  # 用户标识
+  subject: com.tyz
+
+
+
+
+
+
+

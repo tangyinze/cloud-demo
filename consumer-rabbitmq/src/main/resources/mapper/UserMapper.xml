@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyz.rabbitmq.mapper.UserMapper">
+    <resultMap id="baseUserMap" type="com.tyz.rabbitmq.entity.UserVO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="userIdCardMap" type="com.tyz.rabbitmq.vo.UserIdCardVO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+        <!--一对一的结果配置-->
+        <association property="card" javaType="com.tyz.rabbitmq.entity.IdCardVO">
+            <id property="id" column="card_id" jdbcType="BIGINT"/>
+            <result property="idCardNo" column="id_card_no" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="status" column="card_status" jdbcType="INTEGER"/>
+            <result property="createTime" column="card_create_time" jdbcType="TIMESTAMP"/>
+            <result property="lastLoginTime" column="card_last_login_time" jdbcType="TIMESTAMP"/>
+            <result property="lastUpdateTime" column="card_last_update_time" jdbcType="TIMESTAMP"/>
+        </association>
+    </resultMap>
+
+    <!--所有列-->
+    <sql id="allColumns" >
+        id,name,password,salt,email,phone_number,status,create_time,last_login_time,last_update_time
+    </sql>
+    <!--根据ID查询-->
+    <select id="selectById" resultMap="baseUserMap">
+        SELECT
+            <include refid="allColumns"></include>
+        FROM t_user
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <!--单个插入-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_user(
+            name,
+            password,
+            salt,
+            email,
+            phone_number,
+            status,
+            create_time,
+            last_login_time,
+            last_update_time
+        )
+        VALUES (
+               #{vo.name,jdbcType=VARCHAR},
+               #{vo.password,jdbcType=VARCHAR},
+               #{vo.salt,jdbcType=VARCHAR},
+               #{vo.email,jdbcType=VARCHAR},
+               #{vo.phoneNumber,jdbcType=VARCHAR},
+               #{vo.status,jdbcType=INTEGER},
+               #{vo.createTime,jdbcType=TIMESTAMP},
+               #{vo.lastLoginTime,jdbcType=TIMESTAMP},
+               #{vo.lastUpdateTime,jdbcType=TIMESTAMP}
+               )
+    </insert>
+    <!--单个更新-->
+    <update id="update">
+        UPDATE t_user
+        SET name=#{vo.name,jdbcType=VARCHAR},
+            email=#{vo.email,jdbcType=VARCHAR}
+        WHERE id = #{vo.id,jdbcType=BIGINT}
+    </update>
+    <!--单个删除-->
+    <delete id="delete">
+        DELETE FROM t_user WHERE id= #{id,jdbcType=BIGINT}
+    </delete>
+    <!--查询所有-->
+    <select id="selectAll" resultMap="baseUserMap">
+        SELECT
+        <include refid="allColumns"></include>
+        FROM t_user
+    </select>
+
+    <!-- 1:1结果映射-->
+    <select id="findUserCardInfo" resultMap="userIdCardMap">
+        SELECT
+            u.`id`,
+            u.`name`,
+            u.`password`,
+            u.`salt`,
+            u.`email`,
+            u.`phone_number`,
+            u.`status`,
+            u.`create_time`,
+            u.`last_login_time`,
+            u.`last_update_time`,
+            c.`id` AS card_id,
+            c.`id_card_no`,
+            c.`status` AS card_status,
+            c.`create_time` AS card_create_time,
+            c.`last_login_time` AS card_last_login_time,
+            c.`last_update_time` AS card_last_update_time
+        FROM
+            t_user u
+                LEFT JOIN t_id_card c ON u.`id` = c.`user_id`
+                AND c.`status` = 1
+        WHERE
+            u.`id` = #{id,jdbcType=BIGINT}
+          AND u.`status` = 1
+    </select>
+</mapper>

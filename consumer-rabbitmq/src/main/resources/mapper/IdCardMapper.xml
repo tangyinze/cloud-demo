@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyz.rabbitmq.mapper.IdCardMapper">
+    <resultMap id="baseIdCardMap" type="com.tyz.rabbitmq.entity.IdCardVO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="idCardNo" column="id_card_no" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginTime" column="last_login_time" jdbcType="TIMESTAMP"/>
+        <result property="lastUpdateTime" column="last_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <!--所有列-->
+    <sql id="allColumns" >
+        id,id_card_no,user_id,status,create_time,last_login_time,last_update_time
+    </sql>
+    <!--根据ID查询-->
+    <select id="selectById" resultMap="baseIdCardMap">
+        SELECT
+            <include refid="allColumns"></include>
+        FROM t_id_card
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+    <!--单个插入-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_id_card(
+            id_card_no,
+            user_id,
+            status,
+            create_time,
+            last_login_time,
+            last_update_time
+        )
+        VALUES (
+               #{vo.idCardNo,jdbcType=VARCHAR},
+               #{vo.userId,jdbcType=BIGINT},
+               #{vo.status,jdbcType=INTEGER},
+               #{vo.createTime,jdbcType=TIMESTAMP},
+               #{vo.lastLoginTime,jdbcType=TIMESTAMP},
+               #{vo.lastUpdateTime,jdbcType=TIMESTAMP}
+               )
+    </insert>
+    <!--单个更新-->
+    <update id="update">
+        UPDATE t_id_card
+        SET id_card_no=#{vo.idCardNo,jdbcType=VARCHAR},
+            user_id=#{vo.email,jdbcType=BIGINT}
+        WHERE id = #{vo.id,jdbcType=BIGINT}
+    </update>
+    <!--单个删除-->
+    <delete id="delete">
+        DELETE FROM t_id_card WHERE id= #{id,jdbcType=BIGINT}
+    </delete>
+    <!--查询所有-->
+    <select id="selectAll" resultMap="baseIdCardMap">
+        SELECT
+        <include refid="allColumns"></include>
+        FROM t_id_card
+    </select>
+</mapper>

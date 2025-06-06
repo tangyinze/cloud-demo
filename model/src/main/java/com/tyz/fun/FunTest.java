@@ -524,7 +524,8 @@ public class FunTest {
 
         System.out.println("CompletableFuture supplyAsync异步 end" + Thread.currentThread().getName());
 
-
+       /* boolean aa = 1>2 & false;
+        boolean ba = 1>2 && false;*/
         /**
          * <p>
          *     可序列化的函数对象 (Function & Serializable) 类名::方法名（函数引用 非lambda 表达式 有如下的逻辑）
@@ -582,6 +583,26 @@ public class FunTest {
          *
          * </p>
          */
+        String str = new String("good");
+        char[] ch = {'a', 'b', 'c'};
+        FunTest funTest = new FunTest();
+        funTest.change(str, ch);
+        System.out.println(str + " and ");
+        System.out.println(ch);
+        int i=4,j=2;
+        leftShift(i,j);
+        System.out.println(i);
+        // good and gbc 这里考的就是其实就java的方法是值传还是引用传递
+    }
+
+    public void change(String str, char[] ch) {
+        str = "test ok";
+        ch[0] = 'g';
+    }
+
+    public static void leftShift(int i, int j) {
+        i <<= j;
+        System.out.println("i <<= j val:" + i);
     }
 
     /**

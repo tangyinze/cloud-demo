@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyz.rabbitmq.mapper.DeptMapper">
+    <resultMap id="baseDeptMap" type="com.tyz.rabbitmq.entity.DeptVO">
+        <id property="deptId" column="dept_id" jdbcType="BIGINT"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+        <result property="deptNo" column="dept_no" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="baseDeptEmpMap" type="com.tyz.rabbitmq.vo.DeptEmpVO">
+        <id property="deptId" column="dept_id" jdbcType="BIGINT"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+        <result property="deptNo" column="dept_no" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <!-- 1:N-->
+        <collection property="employees" ofType="com.tyz.rabbitmq.entity.EmployeeVO">
+            <id property="empId" column="emp_id" jdbcType="BIGINT"/>
+            <result property="empName" column="emp_name" jdbcType="VARCHAR"/>
+            <result property="empNo" column="emp_no" jdbcType="VARCHAR"/>
+            <result property="deptId" column="emp_dept_id" jdbcType="BIGINT"/>
+            <result property="status" column="emp_status" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <!--所有列-->
+    <sql id="allColumns" >
+        dept_id,dept_name,dept_no,status
+    </sql>
+    <!--根据ID查询-->
+    <select id="selectById" resultMap="baseDeptMap">
+        SELECT
+            <include refid="allColumns"></include>
+        FROM t_department
+        WHERE dept_id = #{id,jdbcType=BIGINT}
+    </select>
+    <!--单个插入-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="vo.deptId">
+        INSERT INTO t_department(
+            dept_name,
+            dept_no,
+            status
+        )
+        VALUES (
+               #{vo.deptName,jdbcType=VARCHAR},
+               #{vo.deptNo,jdbcType=VARCHAR},
+               #{vo.status,jdbcType=INTEGER}
+               )
+    </insert>
+    <!--单个更新-->
+    <update id="update">
+        UPDATE t_department
+        SET dept_name=#{vo.deptName,jdbcType=VARCHAR},
+            dept_no=#{vo.deptNo,jdbcType=VARCHAR}
+        WHERE dept_id = #{vo.deptId,jdbcType=BIGINT}
+    </update>
+    <!--单个删除-->
+    <delete id="delete">
+        DELETE FROM t_department WHERE dept_id = #{id,jdbcType=BIGINT}
+    </delete>
+    <!--查询所有-->
+    <select id="selectAll" resultMap="baseDeptMap">
+        SELECT
+        <include refid="allColumns"></include>
+        FROM t_department
+    </select>
+
+    <select id="findDepEmpIno" resultMap="baseDeptEmpMap">
+        SELECT
+            dept.`dept_id`,
+            dept.`dept_name`,
+            dept.`dept_no`,
+            dept.`status`,
+            emp.`emp_id`,
+            emp.`dept_id` AS emp_dept_id,
+            emp.`emp_name`,
+            emp.`emp_no`,
+            emp.`status` AS emp_status
+        FROM
+            t_department dept
+                LEFT JOIN t_employee emp ON dept.`dept_id` = emp.`dept_id`
+                AND emp.`status` = 1
+        WHERE
+            dept.`dept_id` = #{id,jdbcType=BIGINT}
+          AND dept.`status` = 1
+    </select>
+</mapper>

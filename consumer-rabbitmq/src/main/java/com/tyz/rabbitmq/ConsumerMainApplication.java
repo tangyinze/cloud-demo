@@ -1,5 +1,7 @@
 package com.tyz.rabbitmq;
 
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,6 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @create: 2025-03-19
  */
 @SpringBootApplication
+// @MapperScan("com.tyz.rabbitmq.mapper")
+@MapperScans({
+        @MapperScan("com.tyz.rabbitmq.mapper")
+})
 public class ConsumerMainApplication {
     public static void main(String[] args) {
         SpringApplication.run(ConsumerMainApplication.class, args);

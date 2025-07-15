@@ -35,6 +35,12 @@
             </exclusions>
         </dependency>
 
+        <!--校验组件 begin-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!--校验组件 end-->
         <!--log4j2版本和springboot 版本保持一致 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

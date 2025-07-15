@@ -1,5 +1,12 @@
 package com.tyz.rabbitmq.entity;
 
+import com.tyz.rabbitmq.config.valid.EnumValue;
+import com.tyz.rabbitmq.config.valid.PhoneValid;
+import com.tyz.rabbitmq.config.valid.UserGroup;
+import com.tyz.rabbitmq.enums.StatusEnum;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
@@ -16,11 +23,15 @@ public class UserVO implements Serializable {
     /**
      * 主键
      */
+    @NotNull(message = "id不能为空", groups = UserGroup.UpdateGroup.class)
     private Long id;
 
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不能为空",
+            groups = {UserGroup.CreateGroup.class, UserGroup.UpdateGroup.class}
+    )
     private String name;
 
     /**
@@ -31,6 +42,9 @@ public class UserVO implements Serializable {
     /**
      * 加密使用的盐
      */
+    @NotBlank(message = "加密使用的盐不能为空",
+            groups = {UserGroup.CreateGroup.class, UserGroup.UpdateGroup.class}
+    )
     private String salt;
 
     /**
@@ -41,11 +55,21 @@ public class UserVO implements Serializable {
     /**
      * 手机号码
      */
+    @PhoneValid(message = "请填写正确的手机号",
+            groups = {UserGroup.CreateGroup.class, UserGroup.UpdateGroup.class}
+    )
     private String phoneNumber;
 
     /**
      * 状态，-1：逻辑删除，0：禁用，1：启用
      */
+    @EnumValue(message = "状态枚举值不对",
+            linkEnum = StatusEnum.class,
+            groups = {UserGroup.CreateGroup.class, UserGroup.UpdateGroup.class}
+    )
+    @NotNull(message = "状态不能为空",
+            groups = {UserGroup.CreateGroup.class, UserGroup.UpdateGroup.class}
+    )
     private Integer status;
 
     /**
